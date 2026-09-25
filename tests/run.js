@@ -138,15 +138,27 @@ assert.equal(
 const manifestPath = path.join(__dirname, "..", "manifest.json");
 const manifestSource = fs.readFileSync(manifestPath, "utf8");
 const manifest = JSON.parse(manifestSource);
+const defaultLocaleMessagesPath = path.join(
+  __dirname,
+  "..",
+  "_locales",
+  manifest.default_locale,
+  "messages.json"
+);
 
 assert.equal("permissions" in manifest, false);
+assert.equal(manifest.default_locale, "en");
+assert.deepEqual(
+  JSON.parse(fs.readFileSync(defaultLocaleMessagesPath, "utf8")),
+  {}
+);
 assert.equal(
   manifest.homepage_url,
   "https://github.com/hamu0701/ai-sidebar-page-context"
 );
 assert.equal(
   manifest.browser_specific_settings.gecko.id,
-  "{00238259-2ea6-4eed-83c6-6b5815a3f207}"
+  "{b2650341-3a73-432a-a4e4-86735d6835cd}"
 );
 assert.equal("host_permissions" in manifest, false);
 assert.equal("action" in manifest, false);

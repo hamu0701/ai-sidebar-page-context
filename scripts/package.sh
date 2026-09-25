@@ -14,6 +14,7 @@ zip -q -r "$XPI" \
   manifest.json \
   LICENSE \
   THIRD_PARTY_NOTICES.md \
+  _locales \
   icons \
   src \
   third_party
@@ -29,6 +30,7 @@ SOURCE_FILES=(
   eslint.config.mjs
   LICENSE
   THIRD_PARTY_NOTICES.md
+  _locales
   icons
   scripts
   src
