@@ -39,7 +39,7 @@ Page extraction and prompt preparation run locally in Firefox. When you send the
 
 The extension contains no analytics, telemetry, advertising, or remote code, and operates without external servers. It does not store page content, questions, or account data.
 
-For more details, see the [Privacy Policy]().
+For more details, see the [Privacy Policy](./PRIVACY.md).
 
 ### Requirements
 
@@ -88,7 +88,7 @@ innerText による抽出を強制する場合は @page+ を使用してくだ�
 
 本拡張機能にはアナリティクス、テレメトリー、広告、リモートコードは含まれておらず、外部サーバーとも通信しません。ページコンテンツ、質問内容、アカウント情報などを保存することもありません。
 
-詳細は [Privacy Policy]() を参照してください。
+詳細は [Privacy Policy](./PRIVACY.md) を参照してください。
 
 ### 動作要件
 
