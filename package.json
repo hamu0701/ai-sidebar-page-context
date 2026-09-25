@@ -1,0 +1,23 @@
+{
+  "name": "firefox-ai-sidebar-page-context",
+  "version": "0.3.11",
+  "private": true,
+  "description": "Page context bridge for Firefox's built-in AI sidebar",
+  "devDependencies": {
+    "eslint": "^10.11.0",
+    "playwright": "^1.63.0",
+    "prettier": "^3.9.8",
+    "web-ext": "^10.7.0"
+  },
+  "scripts": {
+    "test": "node tests/run.js && node tests/background-harness.js && node tests/provider-harness.js",
+    "check": "node --check src/messages.js && node --check src/provider-catalog.js && node --check src/text.js && node --check src/prompt.js && node --check src/directive.js && node --check src/reader-service.js && node --check src/background.js && node --check src/page-context.js && node --check src/firefox-reader-worker.js && node --check src/provider-interceptor.js && bash -n scripts/package.sh scripts/update-firefox-reader.sh scripts/verify-firefox-reader.sh",
+    "lint": "eslint src tests",
+    "format": "prettier --write manifest.json package.json eslint.config.mjs \"src/**/*.js\" \"tests/**/*.{js,html}\"",
+    "format:check": "prettier --check manifest.json package.json eslint.config.mjs \"src/**/*.js\" \"tests/**/*.{js,html}\"",
+    "validate": "npm run check && npm run lint && npm run format:check && npm test && npm run lint:webext",
+    "verify:firefox-reader": "bash scripts/verify-firefox-reader.sh",
+    "build": "bash scripts/package.sh",
+    "lint:webext": "web-ext lint --source-dir . --ignore-files tests package.json package-lock.json eslint.config.mjs .editorconfig .prettierignore .prettierrc.json scripts web-ext-artifacts README.md PRIVACY.md"
+  }
+}

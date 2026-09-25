@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Provider interceptor harness</title>
+    <style>
+      body {
+        padding: 180px 24px 24px;
+      }
+
+      textarea {
+        width: 320px;
+        height: 80px;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="chat-form">
+      <textarea id="prompt-textarea"></textarea>
+      <button type="submit" data-testid="send-button">Send message</button>
+    </form>
+    <button id="message-control" type="button">Message settings</button>
+    <button id="prompt-control" type="button">Prompt library</button>
+    <button id="delete-control" type="button">Delete message</button>
+    <form id="other-form">
+      <button id="other-submit" type="submit">Save</button>
+    </form>
+
+    <script src="../src/messages.js"></script>
+    <script>
+      window.harness = {
+        buildCalls: 0,
+        lastBuildMessage: null,
+        mode: "success",
+        otherSubmits: 0,
+        sent: [],
+      };
+
+      window.browser = {
+        runtime: {
+          async sendMessage(message) {
+            if (message.type === PageContextMessages.PROVIDER_READY) {
+              return {
+                enabled: true,
+              };
+            }
+            if (message.type === PageContextMessages.BUILD_PROMPT) {
+              window.harness.buildCalls += 1;
+              window.harness.lastBuildMessage = message;
+              if (window.harness.mode === "failure") {
+                return {
+                  ok: false,
+                };
+              }
+              if (window.harness.mode === "slow") {
+                await new Promise(resolve => setTimeout(resolve, 150));
+              }
+              return {
+                ok: true,
+                prompt:
+                  "I'm on page “<tabTitle>Page</tabTitle>” with “<selection>Context</selection>” selected.\n\n" +
+                  message.question,
+                truncated: false,
+              };
+            }
+            throw new Error(`Unexpected message: ${message.type}`);
+          },
+        },
+      };
+
+      window.PageContextProviders = {
+        fromUrl() {
+          return { id: "chatgpt" };
+        },
+      };
+
+      const editor = document.getElementById("prompt-textarea");
+      const form = document.getElementById("chat-form");
+      form.addEventListener("submit", event => {
+        event.preventDefault();
+        window.harness.sent.push(editor.value);
+      });
+      document
+        .getElementById("other-form")
+        .addEventListener("submit", event => {
+          event.preventDefault();
+          window.harness.otherSubmits += 1;
+        });
+    </script>
+    <script src="../src/directive.js"></script>
+    <script src="../src/provider-interceptor.js"></script>
+  </body>
+</html>

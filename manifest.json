@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "AI Sidebar Page Context",
+  "version": "0.3.11",
+  "description": "Adds the active tab's page content to @page questions in the Firefox AI sidebar.",
+  "homepage_url": "https://github.com/hamu0701/ai-sidebar-page-context",
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png"
+  },
+  "background": {
+    "scripts": [
+      "src/messages.js",
+      "src/provider-catalog.js",
+      "src/text.js",
+      "src/prompt.js",
+      "src/reader-service.js",
+      "src/background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "src/messages.js",
+        "src/provider-catalog.js",
+        "src/text.js",
+        "src/directive.js",
+        "src/page-context.js",
+        "src/provider-interceptor.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "incognito": "not_allowed",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{00238259-2ea6-4eed-83c6-6b5815a3f207}",
+      "strict_min_version": "142.0",
+      "data_collection_permissions": {
+        "required": ["websiteContent", "personalCommunications"]
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+node_modules/
+third_party/
+web-ext-artifacts/
+LICENSE
+package-lock.json
